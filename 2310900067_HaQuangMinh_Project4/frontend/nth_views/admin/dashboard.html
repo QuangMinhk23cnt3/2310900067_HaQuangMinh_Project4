@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - G4 ToyStore</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght=400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -271,33 +271,129 @@
             background-color: var(--active-color);
             color: var(--white);
         }
+
+        /* --- CSS CHO MODAL BOX (XEM CHI TIẾT) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            width: 480px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-box h3 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--primary-admin);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 6px;
+        }
+
+        .detail-row span:first-child {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .detail-row span:last-child {
+            font-weight: 700;
+            color: #111;
+        }
+
+        .items-list-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .items-list-box h4 {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--accent-admin);
+        }
+
+        .toy-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .modal-actions {
+            text-align: right;
+            margin-top: 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-close {
+            padding: 10px 18px;
+            background: var(--primary-admin);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-close:hover {
+            background: var(--accent-admin);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- 1. THANH MENU SIDEBAR TRÁI -->
     <aside class="sidebar">
         <div class="sidebar-brand">
             ⚙️ G4 TOYSTORE
         </div>
         <ul class="sidebar-menu">
             <li class="active"><a href="dashboard.html">📊 Tổng quan Dashboard</a></li>
-            <!-- Các liên kết này sẽ được làm ở bước tiếp theo -->
             <li><a href="products-management.html">🧱 Quản lý sản phẩm</a></li>
             <li><a href="orders-management.html">📦 Quản lý đơn hàng</a></li>
             <li><a href="users-management.html">👥 Quản lý người dùng</a></li>
             <li><a href="../user/home.html" target="_blank">🌐 Xem trang chủ User</a></li>
         </ul>
         <div class="sidebar-footer">
-            <a href="../user/login.html" class="btn-logout">Đăng xuất ↩ó</a>
+            <a href="../user/login.html" class="btn-logout">Đăng xuất ↩</a>
         </div>
     </aside>
 
-    <!-- 2. KHU VỰC HIỂN THỊ NỘI DUNG CHÍNH CHẠY THEO SIDEBAR -->
     <div class="main-wrapper">
         
-        <!-- Thanh công cụ phía trên -->
         <header class="topbar">
             <div class="page-title">
                 <h2>Hệ thống quản trị tổng quan</h2>
@@ -308,10 +404,8 @@
             </div>
         </header>
 
-        <!-- Phần thân hiển thị báo cáo thống kê -->
         <main class="content-body">
             
-            <!-- Hàng Thống kê nhanh bằng con số -->
             <div class="stats-grid">
                 <div class="stat-card card-revenue">
                     <div class="stat-info">
@@ -346,7 +440,6 @@
                 </div>
             </div>
 
-            <!-- Bảng Đơn Hàng Vừa Phát Sinh (Dữ liệu mẫu kết nối Database sau này) -->
             <div class="table-section">
                 <div class="table-header">
                     <h3>Danh sách đơn hàng vừa đặt gần đây</h3>
@@ -362,37 +455,109 @@
                             <th>Thao Tác</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>#G4-1024</b></td>
-                            <td>Nguyễn Văn A</td>
-                            <td>20/05/2026</td>
-                            <td>620.000 đ</td>
-                            <td><span class="status-badge warning">Chờ xử lý</span></td>
-                            <td><button class="btn-view" onclick="alert('Xem chi tiết đơn #G4-1024')">Xem</button></td>
-                        </tr>
-                        <tr>
-                            <td><b>#G4-1023</b></td>
-                            <td>Trần Thị B</td>
-                            <td>19/05/2026</td>
-                            <td>199.000 đ</td>
-                            <td><span class="status-badge success">Đã giao</span></td>
-                            <td><button class="btn-view" onclick="alert('Xem chi tiết đơn #G4-1023')">Xem</button></td>
-                        </tr>
-                        <tr>
-                            <td><b>#G4-1022</b></td>
-                            <td>Phạm Minh C</td>
-                            <td>19/05/2026</td>
-                            <td>1.250.000 đ</td>
-                            <td><span class="status-badge danger">Đã hủy</span></td>
-                            <td><button class="btn-view" onclick="alert('Xem chi tiết đơn #G4-1022')">Xem</button></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="dashboard-order-body">
+                        </tbody>
                 </table>
             </div>
 
         </main>
     </div>
 
+    <div id="detail-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>📋 Chi Tiết Hóa Đơn Mua Hàng</h3>
+            
+            <div class="detail-row"><span>Mã Đơn Hàng:</span><span id="dt-code" style="color:var(--active-color);"></span></div>
+            <div class="detail-row"><span>Khách Hàng:</span><span id="dt-customer"></span></div>
+            <div class="detail-row"><span>Ngày Đặt Hàng:</span><span id="dt-date"></span></div>
+            <div class="detail-row"><span>Trạng Thái Hệ Thống:</span><span id="dt-status"></span></div>
+            
+            <div class="items-list-box">
+                <h4>🧱 Các sản phẩm đã mua:</h4>
+                <div id="dt-items-list">
+                    </div>
+            </div>
+
+            <div class="detail-row" style="margin-top: 20px; border-bottom: none;">
+                <span style="font-size: 1.1rem; color: #111;">Tổng Tiền Hóa Đơn:</span>
+                <span id="dt-total" style="font-size: 1.2rem; color: var(--danger);"></span>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-close" onclick="closeDetailModal()">Đóng lại</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mảng lưu trữ thông tin sản phẩm chi tiết của các đơn hàng gần đây
+        const recentOrders = [
+            { 
+                code: "#G4-1024", customer: "Nguyễn Văn A", date: "20/05/2026", total: 620000, status: "Chờ xử lý", statusClass: "warning",
+                products: ["🤖 Robot Nhảy Múa Thông Minh (x1)", "🏎️ Xe Đua Địa Hình Cân Bằng (x1)"]
+            },
+            { 
+                code: "#G4-1023", customer: "Trần Thị B", date: "19/05/2026", total: 199000, status: "Đã giao", statusClass: "success",
+                products: ["🧸 Gấu Bông Teddy Đáng Yêu (x1)"]
+            },
+            { 
+                code: "#G4-1022", customer: "Phạm Minh C", date: "19/05/2026", total: 1250000, status: "Đã hủy", statusClass: "danger",
+                products: ["🏰 Lego Lâu Đài Cổ Tích 500 Chi Tiết (x1)", "🤖 Robot Nhảy Múa Thông Minh (x1)"]
+            }
+        ];
+
+        // Đổ dữ liệu từ mảng JS ra cấu trúc bảng HTML
+        function renderDashboardOrders() {
+            const tbody = document.getElementById('dashboard-order-body');
+            let html = '';
+            
+            recentOrders.forEach((order, index) => {
+                html += `
+                    <tr>
+                        <td><b>${order.code}</b></td>
+                        <td>${order.customer}</td>
+                        <td>${order.date}</td>
+                        <td>${order.total.toLocaleString('vi-VN')} đ</td>
+                        <td><span class="status-badge ${order.statusClass}">${order.status}</span></td>
+                        <td><button class="btn-view" onclick="openDetailModal(${index})">Xem</button></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        // Hàm xử lý hiển thị Modal khi click nút "Xem"
+        function openDetailModal(index) {
+            const order = recentOrders[index];
+            if (order) {
+                document.getElementById('dt-code').innerText = order.code;
+                document.getElementById('dt-customer').innerText = order.customer;
+                document.getElementById('dt-date').innerText = order.date;
+                document.getElementById('dt-status').innerHTML = `<span class="status-badge ${order.statusClass}">${order.status}</span>`;
+                document.getElementById('dt-total').innerText = order.total.toLocaleString('vi-VN') + " đ";
+                
+                // Đổ dữ liệu danh sách sản phẩm mua cụ thể
+                let itemsHtml = '';
+                order.products.forEach(p => {
+                    itemsHtml += `<div class="toy-item"><span>${p}</span></div>`;
+                });
+                document.getElementById('dt-items-list').innerHTML = itemsHtml;
+                
+                // Hiển thị Overlay Modal
+                document.getElementById('detail-modal').style.display = 'flex';
+            }
+        }
+
+        // Đóng hộp thoại Modal
+        function closeDetailModal() {
+            document.getElementById('detail-modal').style.display = 'none';
+        }
+
+        // Chạy hàm render ngay khi tải trang xong
+        window.onload = function() {
+            renderDashboardOrders();
+        };
+    </script>
 </body>
+
 </html>
