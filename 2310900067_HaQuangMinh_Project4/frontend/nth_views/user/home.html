@@ -329,16 +329,17 @@
         /* --- CATEGORIES & PRODUCT SLIDER --- */
         .main-content {
             padding: 60px 50px;
-            max-width: 1400px;
+            max-width: 1500px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #2c3e50;
             margin-bottom: 40px;
             position: relative;
+            font-weight: 700;
         }
 
         .section-title::after {
@@ -354,32 +355,32 @@
         .categories-container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 50px;
             padding: 20px 0;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1350px;
             margin: 0 auto;
         }
 
         .category-block {
             background: #ffffff;
             border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
 
         .category-header {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: left;
         }
 
         .cat-icon {
-            font-size: 2rem;
-            width: 60px;
-            height: 60px;
+            font-size: 2.2rem;
+            width: 65px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -404,99 +405,110 @@
 
         .cat-text h3 {
             color: #333;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 700;
         }
 
         .cat-text p {
             color: #777;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
-        /* Đổi từ grid thành flex để cuộn sản phẩm theo chiều ngang */
         .products-horizontal-slider {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             overflow-x: auto;
             scroll-behavior: smooth;
-            padding: 10px 5px;
-            scrollbar-width: none; /* Ẩn scrollbar trên Firefox */
+            padding: 15px 5px;
+            scrollbar-width: none;
         }
 
         .products-horizontal-slider::-webkit-scrollbar {
-            display: none; /* Ẩn scrollbar trên Chrome, Safari */
+            display: none;
         }
 
-        /* Thẻ sản phẩm cuộn ngang */
+
         .product-card {
-            min-width: 260px; /* Định kích thước cố định để sản phẩm không bị bóp méo */
+            min-width: 300px;
             background-color: #f8f9fa;
             border: 2px solid #f1f2f6;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 0 0 25px 0;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             user-select: none;
+            overflow: hidden;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
             border-color: #4ecdc4;
         }
 
         .product-img {
-            height: 160px;
+            width: 100%;
+            height: 240px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
             font-size: 3rem;
             overflow: hidden;
-            border-radius: 10px;
+            background-color: #eaeaea;
         }
 
         .product-img img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            pointer-events: none; /* Ngăn trình duyệt drag ảnh mặc định */
+            object-fit: cover;
+            pointer-events: none;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
         }
 
         .product-name {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #2f3542;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            padding: 0 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .product-price {
             color: #ff6b6b;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.25rem;
+            padding: 0 15px;
         }
 
         .old-price {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: #a4b0be;
             text-decoration: line-through;
             margin-left: 8px;
             font-weight: 400;
         }
 
-        /* --- BỘ ĐIỀU KHIỂN SCROLL VƯƠNG MIỆN MỚI --- */
+        /* --- ĐÃ ĐIỀU CHỈNH TO LÊN 2.5 LẦN --- */
         .g4-scroll-controller {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 30px;
-            padding: 10px 0;
+            margin-top: 45px; /* Tăng khoảng cách phía trên */
+            padding: 20px 0;   /* Tăng không gian bao quanh */
         }
 
         .g4-scrollbar-track {
             position: relative;
-            width: 250px;
-            height: 6px;
+            width: 450px;       /* Tăng chiều rộng thanh ray từ 300px lên 450px */
+            height: 14px;       /* Tăng độ dày thanh ray từ 6px lên 14px */
             background-color: #e0e0e0;
             border-radius: 10px;
             cursor: pointer;
@@ -507,20 +519,21 @@
             top: 50%;
             left: 0;
             transform: translateY(-50%);
-            width: 35px;
-            height: 35px;
+            width: 80px;        /* Tăng kích thước nút từ 40px lên 80px */
+            height: 80px;       /* Tăng kích thước nút từ 40px lên 80px */
             background-color: #f1c40f;
-            border: 2px solid #ffffff;
+            border: 4px solid #ffffff; /* Tăng độ dày viền trắng */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            font-size: 2.5rem;  /* Phóng to emoji vương miện từ 1.2rem lên 2.5rem */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             cursor: grab;
             transition: background-color 0.2s, transform 0.1s;
             user-select: none;
             z-index: 5;
+            overflow: hidden;
         }
 
         .g4-scrollbar-thumb:active {
@@ -585,6 +598,18 @@
         }
 
         /* Responsive */
+        @media (max-width: 768px) {
+            .product-card {
+                min-width: 260px;
+            }
+            .product-img {
+                height: 200px;
+            }
+            .g4-scrollbar-track {
+                width: 80%; /* Trên mobile thanh ray co giãn theo màn hình */
+            }
+        }
+
         @media (max-width: 576px) {
             .slider-container {
                 height: 300px;
@@ -593,24 +618,11 @@
             .slide-content h2 {
                 font-size: 2rem;
             }
+
             .main-content {
                 padding: 30px 15px;
             }
         }
-        .g4-scrollbar-thumb {
-    /* ... các thuộc tính cũ ... */
-    border-radius: 50%; /* Tạo hình tròn cho thumb */
-    overflow: hidden; /* Giữ hình ảnh nằm trong hình tròn */
-    display: flex; /* Căn giữa hình ảnh */
-    align-items: center;
-    justify-content: center;
-    }       
-
-        .g4-scrollbar-thumb img {
-    width: 100%; /* Hình ảnh lấp đầy thumb */
-    height: 100%;
-    object-fit: cover; /* Hình ảnh không bị méo và nằm gọn trong thumb */
-    }
     </style>
 </head>
 
@@ -662,7 +674,7 @@
 
     <section class="slider-container">
         <button class="slider-btn btn-prev" onclick="moveSlide(-1)">❮</button>
-        
+
         <div class="slider-wrapper" id="sliderWrapper">
             <div class="slide">
                 <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Banner 1">
@@ -719,22 +731,30 @@
                         <p class="product-price">450.000 đ</p>
                     </div>
                     <div class="product-card" onclick="window.location.href='product-detail.html?id=2'">
-                        <div class="product-img">🤖</div>
+                        <div class="product-img">
+                            <img src="/frontend/img/robot.jpg" alt="Robot Nhảy Múa Thông Minh">
+                        </div>
                         <h4 class="product-name">Robot Nhảy Múa Thông Minh</h4>
                         <p class="product-price">620.000 đ</p>
                     </div>
-                    <div class="product-card">
-                        <div class="product-img">🛹</div>
+                    <div class="product-card" onclick="window.location.href='product-detail.html?id=3'">
+                        <div class="product-img">
+                            <img src="/frontend/img/vantruot.jpg" alt="Ván Trượt Thể Thao Siêu Hạng">
+                        </div>
                         <h4 class="product-name">Ván Trượt Thể Thao Siêu Hạng</h4>
                         <p class="product-price">350.000 đ</p>
                     </div>
-                    <div class="product-card">
-                        <div class="product-img">🎯</div>
+                    <div class="product-card" onclick="window.location.href='product-detail.html?id=4'">
+                        <div class="product-img">
+                            <img src="/frontend/img/phitieu.jpg" alt="Bộ Phi Tiêu Nam Châm An Toàn">
+                        </div>
                         <h4 class="product-name">Bộ Phi Tiêu Nam Châm An Toàn</h4>
                         <p class="product-price">180.000 đ</p>
                     </div>
-                    <div class="product-card">
-                        <div class="product-img">🧱</div>
+                    <div class="product-card" onclick="window.location.href='product-detail.html?id=5'">
+                        <div class="product-img">
+                            <img src="/frontend/img/legomaybay.jpg" alt="Lego City Máy Bay Cứu Hộ">
+                        </div>
                         <h4 class="product-name">Lego City Máy Bay Cứu Hộ</h4>
                         <p class="product-price">390.000 đ</p>
                     </div>
@@ -758,27 +778,37 @@
 
                 <div class="products-horizontal-slider">
                     <div class="product-card">
-                        <div class="product-img">🧸</div>
+                        <div class="product-img">
+                            <img src="/frontend/img/gaubong.jpg" alt="Gấu Bông Khổng Lồ Đáng Yêu">
+                        </div>
                         <h4 class="product-name">Gấu Bông Khổng Lồ Đáng Yêu</h4>
                         <p class="product-price">199.000 đ <span class="old-price">350.000 đ</span></p>
                     </div>
                     <div class="product-card">
-                        <div class="product-img">🧩</div>
+                        <div class="product-img">
+                            <img src="/frontend/img/thehoc.jpg" alt="Bộ Thẻ Học Tư Duy Cho Bé">
+                        </div>
                         <h4 class="product-name">Bộ Thẻ Học Tư Duy Cho Bé</h4>
                         <p class="product-price">95.000 đ <span class="old-price">150.000 đ</span></p>
                     </div>
                     <div class="product-card">
-                        <div class="product-img">🎨</div>
+                        <div class="product-img">
+                            <img src="/frontend/img/hopmau.jpg" alt="Hộp Màu Vẽ Đa Năng 48 Món">
+                        </div>
                         <h4 class="product-name">Hộp Màu Vẽ Đa Năng 48 Món</h4>
                         <p class="product-price">75.000 đ <span class="old-price">120.000 đ</span></p>
                     </div>
                     <div class="product-card">
-                        <div class="product-img">🎈</div>
+                        <div class="product-img">
+                            <img src="/frontend/img/bongbong.jpg" alt="Combo Bong Bóng Tạo Hình">
+                        </div>
                         <h4 class="product-name">Combo Bong Bóng Tạo Hình Nghệ Thuật</h4>
                         <p class="product-price">45.000 đ <span class="old-price">90.000 đ</span></p>
                     </div>
                     <div class="product-card">
-                        <div class="product-img">🦄</div>
+                        <div class="product-img">
+                            <img src="/frontend/img/pony.jpg" alt="Mô Hình Ngựa Pony Thần Kỳ">
+                        </div>
                         <h4 class="product-name">Mô Hình Ngựa Pony Thần Kỳ</h4>
                         <p class="product-price">150.000 đ <span class="old-price">250.000 đ</span></p>
                     </div>
@@ -820,11 +850,11 @@
                     <li>
                         <a href="blog-detail.html?id=101">Cách chọn đồ chơi an toàn cho bé dưới 3 tuổi</a>
                         <span class="blog-date">20/05/2026</span>
-                    </li>
+                    </td>
                     <li>
                         <a href="blog-detail.html?id=102">LEGO City 2026: Có gì mới trong bộ sưu tập Hè?</a>
                         <span class="blog-date">15/05/2026</span>
-                    </li>
+                    </td>
                 </ul>
             </div>
         </div>
@@ -834,9 +864,7 @@
         </div>
     </footer>
 
-
     <script>
-        // --- Phần 1: Code Logic Cho Slider Chuyển Ảnh Banner ---
         let currentSlideIndex = 0;
         const slides = document.querySelectorAll('.slide');
         const sliderWrapper = document.getElementById('sliderWrapper');
@@ -846,7 +874,7 @@
 
         function updateSlider() {
             sliderWrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-            
+
             dots.forEach((dot, index) => {
                 if (index === currentSlideIndex) {
                     dot.classList.add('active');
@@ -881,8 +909,6 @@
 
         resetTimer();
 
-
-        // --- Phần 2: Xử Lý Kéo Vương Miện Để Điều Khiển Cuộn Sản Phẩm ---
         document.addEventListener("DOMContentLoaded", function () {
             const blocks = document.querySelectorAll('.category-block');
 
@@ -897,16 +923,14 @@
                 let startX = 0;
                 let startThumbLeft = 0;
 
-                // Hàm tính toán giới hạn vị trí di chuyển của Vương miện
                 function getSliderBounds() {
                     const maxThumbLeft = track.clientWidth - thumb.clientWidth;
                     const maxProductScroll = productSlider.scrollWidth - productSlider.clientWidth;
                     return { maxThumbLeft, maxProductScroll };
                 }
 
-                // Cập nhật vị trí Vương miện đồng bộ khi người dùng lướt ngang bằng chuột/touchpad trực tiếp trên sản phẩm
                 productSlider.addEventListener('scroll', () => {
-                    if (isDragging) return; // Nếu đang kéo vương miện thì bỏ qua sự kiện này
+                    if (isDragging) return;
                     const { maxThumbLeft, maxProductScroll } = getSliderBounds();
                     if (maxProductScroll <= 0) return;
 
@@ -914,39 +938,32 @@
                     thumb.style.left = `${scrollPercentage * maxThumbLeft}px`;
                 });
 
-                // Sự kiện khi bấm chuột vào icon vương miện 
                 thumb.addEventListener('mousedown', (e) => {
                     isDragging = true;
                     startX = e.clientX;
                     startThumbLeft = parseInt(window.getComputedStyle(thumb).left) || 0;
-                    document.body.style.userSelect = 'none'; // Chặn bôi đen văn bản khi đang kéo
+                    document.body.style.userSelect = 'none';
                 });
 
-                // Sự kiện di chuyển chuột trên toàn màn hình sau khi bấm giữ vương miện
                 document.addEventListener('mousemove', (e) => {
                     if (!isDragging) return;
 
                     const { maxThumbLeft, maxProductScroll } = getSliderBounds();
-                    
-                    // Tính độ lệch khoảng cách chuột di chuyển
+
                     let deltaX = e.clientX - startX;
                     let newLeft = startThumbLeft + deltaX;
 
-                    // Giới hạn không cho vương miện chạy ra khỏi đường ray (0px -> max)
                     if (newLeft < 0) newLeft = 0;
                     if (newLeft > maxThumbLeft) newLeft = maxThumbLeft;
 
-                    // Di chuyển vương miện theo chuột
                     thumb.style.left = `${newLeft}px`;
 
-                    // Tính tỷ lệ phần trăm và cuộn vùng sản phẩm tương ứng theo
                     if (maxThumbLeft > 0) {
                         const percent = newLeft / maxThumbLeft;
                         productSlider.scrollLeft = percent * maxProductScroll;
                     }
                 });
 
-                // Buông chuột để kết thúc thao tác kéo thả
                 document.addEventListener('mouseup', () => {
                     if (isDragging) {
                         isDragging = false;
@@ -954,10 +971,9 @@
                     }
                 });
 
-                // Xử lý sự kiện click nhanh lên một điểm bất kỳ trên thanh Track để chuyển nhanh vị trí cuộn
                 track.addEventListener('click', (e) => {
-                    if (e.target === thumb) return; // Nếu bấm vào đúng nút vương miện thì bỏ qua
-                    
+                    if (e.target === thumb) return;
+
                     const { maxThumbLeft, maxProductScroll } = getSliderBounds();
                     const rect = track.getBoundingClientRect();
                     let clickX = e.clientX - rect.left - (thumb.clientWidth / 2);
