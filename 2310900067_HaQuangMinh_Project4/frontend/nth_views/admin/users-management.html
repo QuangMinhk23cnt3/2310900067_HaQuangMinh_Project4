@@ -16,6 +16,8 @@
             --white: #ffffff;
             --text-dark: #333333;
             --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f1c40f;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
@@ -35,18 +37,46 @@
         .topbar { height: 70px; background-color: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; padding: 0 30px; }
         .content-body { padding: 30px; }
 
-        /* TABLE */
+        /* TABLE & ACTIONS */
         .table-section { background-color: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        
+        .table-header-actions { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+        .btn-add { padding: 10px 20px; background-color: var(--success); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-add:hover { background-color: #27ae60; }
+
         .data-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .data-table th, .data-table td { padding: 14px; border-bottom: 1px solid #eee; }
+        .data-table th, .data-table td { padding: 14px; border-bottom: 1px solid #eee; vertical-align: middle; }
         .data-table th { background-color: #f8f9fa; color: #555; font-weight: 700; }
 
-        .role-badge { padding: 4px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; }
+        .role-badge { padding: 4px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; display: inline-block; }
         .role-badge.admin { background-color: #eaf2f8; color: #2980b9; }
         .role-badge.customer { background-color: #f4ecf7; color: #8e44ad; }
 
-        .btn-lock { padding: 6px 12px; background-color: #fdedec; color: var(--danger); border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
-        .btn-lock:hover { background-color: var(--danger); color: white; }
+        .action-group { display: flex; gap: 8px; }
+        .btn-edit { padding: 6px 12px; background-color: #fef9e7; color: #d35400; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-edit:hover { background-color: var(--warning); color: white; }
+        .btn-delete { padding: 6px 12px; background-color: #fdedec; color: var(--danger); border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-delete:hover { background-color: var(--danger); color: white; }
+
+        /* MODAL STYLES */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.open { display: flex; }
+        .modal-content { background-color: white; width: 450px; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); animation: fadeIn 0.3s ease; }
+        .modal-title { margin-bottom: 20px; font-size: 1.3rem; font-weight: 700; color: var(--primary-admin); }
+        
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 0.95rem; outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--active-color); }
+        
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; }
+        .btn-cancel { padding: 10px 16px; background-color: #bdc3c7; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-submit { padding: 10px 20px; background-color: var(--active-color); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -70,6 +100,10 @@
 
         <main class="content-body">
             <div class="table-section">
+                <div class="table-header-actions">
+                    <button class="btn-add" onclick="openAddModal()">➕ Thêm thành viên mới</button>
+                </div>
+
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -81,30 +115,42 @@
                             <th>Thao Tác</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="userTableBody">
+                        <tr data-id="U001">
                             <td><b>#U001</b></td>
-                            <td>admin_g4</td>
-                            <td>admin@g4toystore.com</td>
-                            <td><span class="role-badge admin">Quản trị viên</span></td>
+                            <td class="username">admin_g4</td>
+                            <td class="email">admin@g4toystore.com</td>
+                            <td class="role" data-role="admin"><span class="role-badge admin">Quản trị viên</span></td>
                             <td>01/01/2026</td>
-                            <td><button class="btn-lock" style="opacity:0.5; cursor:not-allowed;" disabled>Không thể khóa</button></td>
+                            <td>
+                                <span style="color:#aaa; font-style: italic; font-size: 0.9rem;">Hệ thống bảo vệ</span>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr data-id="U002">
                             <td><b>#U002</b></td>
-                            <td>nguyen_van_a</td>
-                            <td>vana@gmail.com</td>
-                            <td><span class="role-badge customer">Khách hàng</span></td>
+                            <td class="username">nguyen_van_a</td>
+                            <td class="email">vana@gmail.com</td>
+                            <td class="role" data-role="customer"><span class="role-badge customer">Khách hàng</span></td>
                             <td>12/03/2026</td>
-                            <td><button class="btn-lock" onclick="confirm('Bạn có chắc chắn muốn khóa tài khoản này?')">Khóa tài khoản</button></td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="btn-edit" onclick="openEditModal('U002')">Sửa</button>
+                                    <button class="btn-delete" onclick="deleteUser('U002')">Xóa</button>
+                                </div>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr data-id="U003">
                             <td><b>#U003</b></td>
-                            <td>tranthib</td>
-                            <td>b_tran@gmail.com</td>
-                            <td><span class="role-badge customer">Khách hàng</span></td>
+                            <td class="username">tranthib</td>
+                            <td class="email">b_tran@gmail.com</td>
+                            <td class="role" data-role="customer"><span class="role-badge customer">Khách hàng</span></td>
                             <td>18/05/2026</td>
-                            <td><button class="btn-lock" onclick="confirm('Bạn có chắc chắn muốn khóa tài khoản này?')">Khóa tài khoản</button></td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="btn-edit" onclick="openEditModal('U003')">Sửa</button>
+                                    <button class="btn-delete" onclick="deleteUser('U003')">Xóa</button>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -112,5 +158,148 @@
         </main>
     </div>
 
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-title" id="modalTitle">Thêm Thành Viên Mới</div>
+            <form id="userForm">
+                <input type="hidden" id="formMode" value="add">
+                <input type="hidden" id="editUserId" value="">
+
+                <div class="form-group">
+                    <label for="inputUsername">Tên tài khoản</label>
+                    <input type="text" id="inputUsername" placeholder="Nhập tên tài khoản (vd: nguyenvana)" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Email liên hệ</label>
+                    <input type="email" id="inputEmail" placeholder="Nhập địa chỉ email" required>
+                </div>
+                <div class="form-group">
+                    <label for="selectRole">Vai trò</label>
+                    <select id="selectRole">
+                        <option value="customer">Khách hàng</option>
+                        <option value="admin">Quản trị viên</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Hủy bỏ</button>
+                    <button type="submit" class="btn-submit">Lưu thông tin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('userModal');
+        const userForm = document.getElementById('userForm');
+        const modalTitle = document.getElementById('modalTitle');
+        const formMode = document.getElementById('formMode');
+        const editUserId = document.getElementById('editUserId');
+
+        // Hàm mở Modal Thêm mới
+        function openAddModal() {
+            formMode.value = "add";
+            modalTitle.innerText = "Thêm Thành Viên Mới";
+            userForm.reset();
+            modal.classList.add('open');
+        }
+
+        // Hàm mở Modal Sửa
+        function openEditModal(id) {
+            formMode.value = "edit";
+            editUserId.value = id;
+            modalTitle.innerText = "Cập Nhật Thông Tin";
+
+            // Tìm dòng dữ liệu tương ứng trong bảng để đổ ngược lên form
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            const currentUsername = row.querySelector('.username').innerText;
+            const currentEmail = row.querySelector('.email').innerText;
+            const currentRole = row.querySelector('.role').getAttribute('data-role');
+
+            document.getElementById('inputUsername').value = currentUsername;
+            document.getElementById('inputEmail').value = currentEmail;
+            document.getElementById('selectRole').value = currentRole;
+
+            modal.classList.add('open');
+        }
+
+        // Hàm đóng Modal
+        function closeModal() {
+            modal.classList.remove('open');
+        }
+
+        // Hàm Xóa User
+        function deleteUser(id) {
+            if(confirm(`Bạn có chắc chắn muốn xóa tài khoản này không?`)) {
+                const row = document.querySelector(`tr[data-id="${id}"]`);
+                if(row) {
+                    row.remove();
+                    alert("Xóa tài khoản thành công!");
+                }
+            }
+        }
+
+        // Xử lý sự kiện Submit Form (Xử lý giả lập giao diện)
+        userForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('inputUsername').value;
+            const email = document.getElementById('inputEmail').value;
+            const role = document.getElementById('selectRole').value;
+            
+            const roleText = role === 'admin' ? 'Quản trị viên' : 'Khách hàng';
+            const roleBadgeClass = role === 'admin' ? 'role-badge admin' : 'role-badge customer';
+
+            if (formMode.value === "add") {
+                // Tạo ID ngẫu nhiên cho demo tĩnh
+                const newId = "U" + Math.floor(100 + Math.random() * 900);
+                const today = new Date().toLocaleDateString('vi-VN');
+
+                // Tạo dòng TR mới
+                const newRow = document.createElement('tr');
+                newRow.setAttribute('data-id', newId);
+                newRow.innerHTML = `
+                    <td><b>#${newId}</b></td>
+                    <td class="username">${username}</td>
+                    <td class="email">${email}</td>
+                    <td class="role" data-role="${role}"><span class="${roleBadgeClass}">${roleText}</span></td>
+                    <td>${today}</td>
+                    <td>
+                        <div class="action-group">
+                            <button class="btn-edit" onclick="openEditModal('${newId}')">Sửa</button>
+                            <button class="btn-delete" onclick="deleteUser('${newId}')">Xóa</button>
+                        </div>
+                    </td>
+                `;
+                document.getElementById('userTableBody').appendChild(newRow);
+                alert("Thêm thành viên mới thành công!");
+
+            } else if (formMode.value === "edit") {
+                // Tìm dòng đang sửa đổi để cập nhật dữ liệu mới
+                const id = editUserId.value;
+                const row = document.querySelector(`tr[data-id="${id}"]`);
+                
+                if(row) {
+                    row.querySelector('.username').innerText = username;
+                    row.querySelector('.email').innerText = email;
+                    
+                    const roleTd = row.querySelector('.role');
+                    roleTd.setAttribute('data-role', role);
+                    roleTd.innerHTML = `<span class="${roleBadgeClass}">${roleText}</span>`;
+                    
+                    alert("Cập nhật thông tin thành công!");
+                }
+            }
+
+            closeModal();
+        });
+
+        // Đóng modal khi bấm ra ngoài vùng hộp thoại
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>
